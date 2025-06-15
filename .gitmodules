@@ -2,3 +2,7 @@
 	path = env/common
 	url = https://github.com/jacoby3210/cas.designer.env.common
 	branch = main
+[submodule "env/desktop.sciter"]
+	path = env/desktop.sciter
+	url = https://github.com/jacoby3210/cas.designer.env.desktop.sciter
+	branch = main
