@@ -1,0 +1,4 @@
+[submodule "env/common"]
+	path = env/common
+	url = https://github.com/jacoby3210/cas.designer.env.common
+	branch = main
