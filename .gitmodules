@@ -10,3 +10,7 @@
 	path = env/web.vite
 	url = https://github.com/jacoby3210/cas.designer.env.web.vite
 	branch = main
+[submodule "packages/base"]
+	path = packages/base
+	url = https://github.com/jacoby3210/cas.designer.package.base
+	branch = main
