@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>CAS Foundation Space</title>
+    <title>CAS Designer Space</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -15,6 +15,29 @@
       }
     </style>
     <script type="module">
+
+      // import settings.
+
+      // import available modules
+      import { module as base } from "./packages/base/code/index.mjs";
+      
+      // setup env module
+      const  {module:env} = await (async function () {
+        const name = await (async function () {
+          if (typeof loadScript !== "undefined") return "desktop.sciter";
+          return "web.vite";
+        })();
+        return await import(`./env/${name}/code/index.mjs`);
+      })();
+      
+      // former cas object
+      globalThis.cas = { ...env, ...base };
+      await env.init(cas, {preact: true});
+      await base.init(cas);
+      
+      // run tests
+      await cas.engine.test.run(__DIR__);  
+
     </script>
   </head>
   <body>
