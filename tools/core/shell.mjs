@@ -18,13 +18,17 @@ export class Shell {
    */
   static run(command, args = [], options = {}) {
     const fullCommand = [command, ...args].join(" ");
+    const { quiet = false, ...execOptions } = options;
     try {
       return execSync(fullCommand, {
-        stdio: "pipe",
-        encoding: "utf8",
-        ...options,
+        stdio: quiet ? "ignore" : "pipe",
+        encoding: quiet ? undefined : "utf8",
+        ...execOptions,
       });
     } catch (error) {
+      if (quiet) {
+        throw new Error(`Command failed: ${fullCommand}`);
+      }
       const output = error.stdout?.toString() ?? "";
       const stderr = error.stderr?.toString() ?? "";
       throw new Error(
