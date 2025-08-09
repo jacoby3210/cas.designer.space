@@ -17,7 +17,6 @@ try {
     cwd: Paths.base(),
     stdio: "inherit",
   });
-  console.log("");
 } catch (err) {
   console.error("❌ Error initializing submodules:", err.message);
   process.exit(1);
@@ -35,10 +34,10 @@ try {
 }
 
 // --- NPM Dependencies Installation ---
-console.log("\n📦 Installing NPM dependencies...");
+console.log("\n📦 Install: npm dependencies...");
 
 // --- Install root dependencies ---
-console.log("⚙️  Installing NPM root dependencies...");
+console.log("⚙️  Install: npm root dependencies...");
 try {
   Shell.run("npm", ["install"], {
     cwd: Paths.base(),
@@ -50,7 +49,7 @@ try {
 }
 
 // --- Install dependencies in all submodules ---
-console.log("⚙️  Installing NPM dependencies in all submodules...");
+console.log("⚙️  Install: npm submodules dependencies...");
 try {
   Shell.run(
     "git",
@@ -74,7 +73,8 @@ try {
 console.log("");
 
 // --- Run cas-install in supported submodules ---
-console.log("🚀 Running cas-install in supported submodules...");
+console.log("🚀 Running cas-install script from submodules (if existed) ...");
+console.log("");
 try {
   Shell.run(
     "git",
@@ -82,7 +82,7 @@ try {
       "submodule",
       "foreach",
       "--recursive",
-      "node -e \"try{const pkg=require('./package.json');if(pkg.scripts && pkg.scripts['cas-install']){require('child_process').execSync('npm run cas-install',{stdio:'inherit'});}else{console.log('ℹ️  cas-install not defined in $name');}}catch(e){console.log('⚠️  No package.json in $name');}\"",
+      "node -e \"try{const name=process.argv[1];const pkg=require('./package.json');if(pkg.scripts && pkg.scripts['cas-install']){require('child_process').execSync('npm run cas-install',{stdio:'inherit'});}else{console.log('ℹ️  cas-install not defined in '+name);}}catch(e){const name=process.argv[1];console.log('⚠️  No package.json in '+name);}\" \"$name\"",
     ],
     {
       cwd: Paths.base(),
