@@ -82,12 +82,9 @@ try {
       "submodule",
       "foreach",
       "--recursive",
-      "node -e \"try{const name=process.argv[1];const pkg=require('./package.json');if(pkg.scripts && pkg.scripts['cas-install']){require('child_process').execSync('npm run cas-install',{stdio:'inherit'});}else{console.log('ℹ️  cas-install not defined in '+name);}}catch(e){const name=process.argv[1];console.log('⚠️  No package.json in '+name);}\" \"$name\"",
+      'sh -c "if [ \\"$name\\" = \\"packages/base\\" ]; then echo; fi; if [ -f package.json ] && [ \\"$PWD\\" != \\"$toplevel\\" ] && grep -q \\"cas-install\\" package.json; then npm run cas-install || echo \\"cas-install failed in $name\\"; else echo \\"Skipping $name (root, no package.json, or no cas-install script)\\";  fi; echo "\n";"',
     ],
-    {
-      cwd: Paths.base(),
-      stdio: "inherit",
-    }
+    { cwd: Paths.base(), stdio: "inherit" }
   );
 } catch (err) {
   console.warn(
@@ -95,7 +92,5 @@ try {
     err.message
   );
 }
-console.log("");
-
 console.log("✅ All submodules processed!");
 console.log("");
