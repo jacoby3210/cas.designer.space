@@ -14,3 +14,7 @@
 	path = packages/base
 	url = https://github.com/jacoby3210/cas.designer.package.base
 	branch = main
+[submodule "packages/bricks"]
+	path = packages/bricks
+	url = https://github.com/jacoby3210/cas.designer.package.bricks
+	branch = main
